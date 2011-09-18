@@ -8,41 +8,46 @@
  */
 class modRottenTomatoesReviews
 {
-    public static function getReviews($url, $apikey)
-    {
-        $endpoint = $url.'?apikey='.$apikey;
+    private $apikey;
 
-        $session = curl_init($endpoint);
+    public function __construct($apikey)
+    {
+        $this->apikey = $apikey;
+    }
+
+    public function getReviews($url)
+    {
+        $endpoint = $url.'?apikey='.$this->apikey;
+        
+        $results = $this->curlRequest($endpoint);
+        if($results === NULL){
+            echo 'No reviews found';
+            return false;
+        }
+        return $results->reviews;
+    }
+
+    public function getFilm($q)
+    {
+        $endpoint = 'http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=' . $this->apikey . '&q=' . $q.'&page_limit=1';
+        $result = $this->curlRequest($endpoint);
+        
+        if($result === NULL){
+            echo 'Film not found';
+            return false;
+        }
+        return $result->movies[0];
+    }
+
+    public function curlRequest($url)
+    {
+        $session = curl_init($url);
+
         curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
         $data = curl_exec($session);
         curl_close($session);
 
-        $search_results = json_decode($data);
-        if ($search_results === NULL){
-            echo 'No reviews found';
-        }
-        return $search_results->reviews;
-    }
-
-    public static function getFilm($q, $apikey)
-    {
-        $endpoint = 'http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=' . $apikey . '&q=' . $q.'&page_limit=1';
-        $session = curl_init($endpoint);
-
-        curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
-        $data = curl_exec($session);
-        curl_close($session);
-
-        $search_results = json_decode($data);
-        if ($search_results === NULL){
-            echo 'No reviews found';
-        }
-        return $search_results->movies[0];
-    }
-
-    public static function curlRequest()
-    {
-
+        return json_decode($data);
     }
 }
 ?>

@@ -27,8 +27,10 @@ if(($option == 'com_content' && ($view == 'section' || $view == 'category')) || 
         $q = urlencode(substr($pagetitle, strpos($pagetitle, "-")+2));
     }
 
-    $movie = modRottenTomatoesReviews::getFilm($q, $apikey);
-    $reviews = modRottenTomatoesReviews::getReviews($movie->links->reviews, $apikey);
+    $rtr = new modRottenTomatoesReviews($apikey);
+
+    $movie = $rtr->getFilm($q);
+    $reviews = $rtr->getReviews($movie->links->reviews);
 
     require(JModuleHelper::getLayoutPath('mod_rt_reviews'));
 }
