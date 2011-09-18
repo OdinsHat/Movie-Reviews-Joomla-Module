@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="module" version="1.0.0">
+	<name>Rotten Tomatoes Reviews</name>
+	<author>Doug Bromley</author>
+	<creationDate>September 2011</creationDate>
+	<copyright>Copyright (C) 2011 Doug Bromley. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>doug.bromley@gmail.com</authorEmail>
+	<authorUrl>www.straw-dogs.co.uk</authorUrl>
+	<version>1.0.0</version>
+	<description>Show reviews of the currently displayed film</description>
+	<files>
+	<filename module="mod_related_items">mod_rt_reviews.php</filename>
+	</files>
+	<params>
+		<param name="apikey" type="text" default="" label="API Key" description="Your Rotten Tomatoes API key" />
+		<param name="overridefilm" type="text" default="" label="Over Ride Film" description="If you leave this box blank the module will try to work out the film reviews to fetch based on the page title" />
+        <param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
+	</params>
+</install>
